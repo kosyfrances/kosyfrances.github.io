@@ -34,7 +34,7 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-# facebook: kosy.f.anyanwu
+# facebook: myfacebook
 twitter: kosyfrances
 # google: mygoogle
 # instagram: myinstagram
@@ -43,7 +43,6 @@ linkedin: kosyanyanwu
 # youtube: myyoutube
 # spotify: myspotify
 github: kosyfrances
-# gitlab: mygitlab
 # lastfm: mylastfm
 stackoverflow: 5058713/kosy-anyanwu
 # quora: userquora
