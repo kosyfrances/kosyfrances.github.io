@@ -12,9 +12,9 @@ picture: assets/images/profile.jpg
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
-resume: true
-resume-external: true
-resume-url: https://google.com/?q=my+resume
+# resume: true
+# resume-external: true
+# resume-url: https://google.com/?q=my+resume
 
 url: https://kosyfrances.github.io
 # your url: http://USERNAME.github.io
@@ -52,18 +52,12 @@ medium: kosyfrances
 email: kosyfrances@gmail.com
 
 authors:
-    johndoe:
-        name: John Doe
-        bio: A Man who travels the world eating noodles
+    kosyanyanwu:
+        name: Kosy Anyanwu
+        bio: The lady who travels the world and loves karaoke
         external-image: false
         picture: assets/images/profile.jpg
-        twitter: johndoe
-    jamesfoster:
-        name: James Foster
-        bio: A Man who develops software with coffee
-        external-image: false
-        picture: assets/images/james.jpg
-        twitter: jamesfoster
+        twitter: kosyfrances
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
