@@ -31,7 +31,12 @@ layout: page
 <h2>Projects</h2>
 
 <ul>
-	<li><a href="https://github.com/">Lorem Lorem</a></li>
-	<li><a href="https://github.com/">Ipsum Dolor</a></li>
-	<li><a href="https://github.com/">Dolor Lorem</a></li>
+	<li><a href="http://iykeanyanwu.com/">Iyke's portfolio</a></li>
+	<li><a href="https://github.com/kosyfrances/heroku_log_drain_elk_stack/">Heroku ELK Log Drain</a></li>
+	<li><a href="http://kosyfrances.github.io/tourtales-prototype/">Tourtales</a></li>
+	<li><a href="https://github.com/kosyfrances/food-bot-review/">Foodbot</a></li>
+	<li><a href="http://kosyfrances.github.io/git-search/">Git Profile Search</a></li>
+	<li><a href="https://andehush.herokuapp.com/">Andehush</a></li>
+	<li><a href="http://kosyfrances.github.io/soundcloud-track-finder/">Soundcloud Track Finder</a></li>
+	<li><a href="http://kosyfrances.github.io/calculator/">Calculator</a></li>
 </ul>
