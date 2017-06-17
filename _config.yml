@@ -1,6 +1,6 @@
 # main text of home
-name: John Doe
-bio: A Man who travels the world eating noodles
+name: Kosy Anyanwu
+bio: The lady who travels the world and loves karaoke
 
 # twitter summary info
 description: A blog about technology and stuff related
@@ -16,7 +16,7 @@ resume: true
 resume-external: true
 resume-url: https://google.com/?q=my+resume
 
-url: https://koppl.in/indigo
+url: https://kosyfrances.github.io
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -34,22 +34,22 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-facebook: myfacebook
-twitter: mytwitter
+# facebook: myfacebook
+twitter: kosyfrances
 # google: mygoogle
 # instagram: myinstagram
 # pinterest: mypinterest
-# linkedin: mylinkedin
+linkedin: kosyanyanwu
 # youtube: myyoutube
 # spotify: myspotify
-github: mygithub
+github: kosyfrances
 # lastfm: mylastfm
-# stackoverflow: 7044681/mystackoverflow
+stackoverflow: 5058713/kosy-anyanwu
 # quora: userquora
 # reddit: username
-medium: medium
+medium: kosyfrances
 # vimeo: myvimeo
-email: myemail@gmail.com
+email: kosyfrances@gmail.com
 
 authors:
     johndoe:
