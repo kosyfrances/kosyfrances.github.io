@@ -14,7 +14,11 @@ picture: assets/images/profile.jpg
 # and specify source (external or local).
 # resume: true
 # resume-external: true
+<<<<<<< HEAD
 # resume-url: https://drive.google.com/file/d/0B3Adg2pI1c4nVHM1VFQyMm8zeUk/view?usp=sharing
+=======
+# resume-url: https://google.com/?q=my+resume
+>>>>>>> Edit config, update gitignore
 
 url: https://kosyfrances.github.io
 # your url: http://USERNAME.github.io
@@ -58,7 +62,6 @@ authors:
         external-image: false
         picture: assets/images/profile.jpg
         twitter: kosyfrances
-        facebook: kosy.f.anyanwu
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
