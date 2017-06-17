@@ -49,7 +49,7 @@
 
     {% if site.lastfm %}
         <a class="link" data-title="last.fm/user/{{ site.lastfm }}" href="https://last.fm/user/{{ site.lastfm }}" target="_blank">
-            <svg class="icon icon-lastfm"><use xlink:href="#icon-lastfm"></use></svg>   
+            <svg class="icon icon-lastfm"><use xlink:href="#icon-lastfm"></use></svg>
         </a>
     {% endif %}
 
@@ -58,7 +58,7 @@
             <svg class="icon icon-github"><use xlink:href="#icon-github"></use></svg>
         </a>
     {% endif %}
-    
+
     {% if site.stackoverflow %}
         <a class="link" data-title="stackoverflow.com/users/{{ site.stackoverflow }}" href="http://stackoverflow.com/users/{{ site.stackoverflow }}" target="_blank">
             <svg class="icon icon-stackoverflow"><use xlink:href="#icon-stackoverflow"></use></svg>
@@ -94,4 +94,10 @@
             <svg class="icon icon-mail"><use xlink:href="#icon-mail"></use></svg>
         </a>
     {% endif %}
+
+    <!-- {% if site.codementor %}
+        <a class="link" data-title="{{ site.codementor }}" href="https://www.codementor.io/{{ site.codementor }}">
+            <img src="https://cdn.codementor.io/badges/codementor_dark.svg" alt="Codementor" style="max-width:100%"/>
+        </a>
+    {% endif %}-->
 </div>
