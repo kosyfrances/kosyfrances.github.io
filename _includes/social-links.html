@@ -59,12 +59,15 @@
         </a>
     {% endif %}
 
+<<<<<<< HEAD
     {% if site.gitlab %}
         <a class="link" data-title="gitlab.com/{{ site.gitlab }}" href="https://gitlab.com/{{ site.gitlab }}" target="_blank">
             <svg class="icon icon-gitlab"><use xlink:href="#icon-gitlab"></use></svg>
         </a>
     {% endif %}
 
+=======
+>>>>>>> WIP - codementor badge
     {% if site.stackoverflow %}
         <a class="link" data-title="stackoverflow.com/users/{{ site.stackoverflow }}" href="http://stackoverflow.com/users/{{ site.stackoverflow }}" target="_blank">
             <svg class="icon icon-stackoverflow"><use xlink:href="#icon-stackoverflow"></use></svg>
@@ -106,4 +109,10 @@
             <svg class="icon icon-mail"><use xlink:href="#icon-mail"></use></svg>
         </a>
     {% endif %}
+
+    <!-- {% if site.codementor %}
+        <a class="link" data-title="{{ site.codementor }}" href="https://www.codementor.io/{{ site.codementor }}">
+            <img src="https://cdn.codementor.io/badges/codementor_dark.svg" alt="Codementor" style="max-width:100%"/>
+        </a>
+    {% endif %}-->
 </div>
