@@ -30,11 +30,11 @@ permalink: /:title/
 
 # if you don't want comments in your posts, leave categories empty
 disqus:
-  shortname: mydisqus # enter this from your disqus account
+  shortname: kosyfrances # enter this from your disqus account
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-# facebook: myfacebook
+facebook: kosy.f.anyanwu
 twitter: kosyfrances
 # google: mygoogle
 # instagram: myinstagram
@@ -48,7 +48,6 @@ stackoverflow: 5058713/kosy-anyanwu
 # quora: userquora
 # reddit: username
 medium: kosyfrances
-# codementor: kanyanwu
 # vimeo: myvimeo
 email: kosyfrances@gmail.com
 
@@ -78,7 +77,7 @@ pagination:
 
 # if you don't need "about" or "blog", comment them out below
 about: true
-# blog: true
+blog: true
 
 # do you want to show the "read time" of the posts?
 read-time: true
