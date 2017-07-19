@@ -38,7 +38,7 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-# facebook: myfacebook
+facebook: kosy.f.anyanwu
 twitter: kosyfrances
 # google: mygoogle
 # instagram: myinstagram
@@ -52,7 +52,6 @@ stackoverflow: 5058713/kosy-anyanwu
 # quora: userquora
 # reddit: username
 medium: kosyfrances
-# codementor: kanyanwu
 # vimeo: myvimeo
 email: kosyfrances@gmail.com
 
