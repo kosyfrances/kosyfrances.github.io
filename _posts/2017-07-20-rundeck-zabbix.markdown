@@ -71,7 +71,7 @@ Before you can access any data inside of Zabbix you'll need to log in and obtain
         "auth": None
     }
 
-    url = 'https://zabbix.gwfathom.com/zabbix/api_jsonrpc.php'
+    url = 'https://ZABBIX_URL/api_jsonrpc.php'
     headers = {
         'content-type': 'application/json'
     }
