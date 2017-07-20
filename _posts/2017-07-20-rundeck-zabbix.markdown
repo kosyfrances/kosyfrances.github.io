@@ -10,7 +10,7 @@ tag:
 - automation
 category: blog
 author: kosyanyanwu
-description: Integrate Zabbix trigger based actions into Rundeck
+description: Integrate Zabbix trigger-based actions into Rundeck
 ---
 
 ## Introduction
@@ -19,7 +19,7 @@ description: Integrate Zabbix trigger based actions into Rundeck
 
 [Rundeck](http://rundeck.org/) is a job scheduler and runbook automation tool.
 
-This article explains how you can integrate Zabbix trigger based actions into Rundeck. The code snippets and examples are written in Python3, using Zabbix API version 3.2 and Rundeck API version 20.
+This article explains how you can integrate Zabbix trigger-based actions into Rundeck. The code snippets and examples are written in Python3, using Zabbix API version 3.2 and Rundeck API version 20.
 
 ## Real world example
 * A service stops running
@@ -239,4 +239,4 @@ After Rundeck successfully executes the job, using the return value, make an API
                  )
 {% endhighlight %}
 
-Phew! This article was too long right? When I had to implement this, the only information I found was [this pdf](https://www.zabbix.com/files/zabconf2016/wolfgang_alper_IntelliTrend-Zabbix-Meets-Ops-With-Rundeck.pdf). But yea, that was how succesfully integrate Zabbix trigger based actions into Rundeck.
+Phew! This article was too long right? When I had to implement this, the only information I found was [this pdf](https://www.zabbix.com/files/zabconf2016/wolfgang_alper_IntelliTrend-Zabbix-Meets-Ops-With-Rundeck.pdf). But yea, that was how I succesfully integrated Zabbix trigger based actions into Rundeck.
