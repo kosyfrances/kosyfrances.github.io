@@ -101,6 +101,7 @@ plugins:
   - jemoji
   - jekyll-admin
   - jekyll-paginate
+  - jekyll-admin
 
 jekyll-mentions:
     base_url: https://github.com
