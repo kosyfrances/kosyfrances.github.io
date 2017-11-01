@@ -114,7 +114,12 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-admin
+<<<<<<< HEAD
   - jekyll-paginate-v2
+=======
+  - jekyll-paginate
+  - jekyll-admin
+>>>>>>> [feature] adding jekyll admin
 
 jekyll-mentions:
   base_url: https://github.com
