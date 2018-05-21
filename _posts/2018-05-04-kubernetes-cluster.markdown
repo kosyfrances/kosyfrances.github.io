@@ -19,6 +19,8 @@ description: Create a Kubernetes cluster using kubeadm on VirtualBox virtual mac
 
 This article explains how you can use kubeadm to set up a Kubernetes cluster on three VirtualBox virtual machines (one master and two workers) running Ubuntu 18.04 LTS. To follow through with this article, you will need to have [Virtualbox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/) installed.
 
+If you just want a quick setup without wanting to know how it is done, you can skip the rest of this article and use this [Github repo](https://github.com/kosyfrances/kubeclust).
+
 ## Create Virtual Machines
 Let us set up 3 VMs, one being the master (kubemaster) and the remaining two being the workers (worker1 and worker2). All VMs will be set up with 2 CPUs and 2GB RAM each.  You can use this [Vagrantfile](https://github.com/kosyfrances/kubeclust/blob/master/Vagrantfile) to spin up the VMs by simply running `vagrant up`.
 
