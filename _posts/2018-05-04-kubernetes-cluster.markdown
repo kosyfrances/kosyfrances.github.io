@@ -1,5 +1,5 @@
 ---
-title: "Using kubeadm to create a Kubernetes cluster on VirtualBox with Ubuntu"
+title: "Using kubeadm to create a Kubernetes 1.10 cluster on VirtualBox with Ubuntu"
 layout: post
 date: 2018-05-04 20:36
 headerImage: false
@@ -11,7 +11,7 @@ tag:
 - virtualbox
 category: blog
 author: kosyanyanwu
-description: Create a Kubernetes cluster using kubeadm on VirtualBox virtual machines running Ubuntu 18.04 LTS.
+description: Create a Kubernetes 1.10 cluster using kubeadm on VirtualBox virtual machines running Ubuntu 18.04 LTS.
 ---
 
 ## Introduction
@@ -57,7 +57,7 @@ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 apt update
-apt install -y kubelet kubeadm kubectl
+apt install -y kubelet=1.10.3-00 kubeadm=1.10.3-00 kubectl=1.10.3-00
 ```
 
 ## Configure cgroup driver used by kubelet on Master Node
