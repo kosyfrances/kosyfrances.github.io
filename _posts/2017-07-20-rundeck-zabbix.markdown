@@ -87,7 +87,7 @@ Before you can access any data inside of Zabbix you'll need to log in and obtain
 This can be gotten from `RUNDECK_URL:PORT_NUMBER/user/profile`
 
 ## Map Zabbix hosts to Rundeck nodes
-Rundeck uses a resource document to declare the resource models used by a project to define the set of Nodes that are available. This file is usually found in `/etc/rundeck/projects/project_name/` in the Rundeck server. We will be using the yaml resource format in this case.
+Rundeck uses a resource document to declare the resource models used by a project to define the set of Nodes that are available. This file is usually found in `/etc/rundeck/projects/project_name/` or `/var/rundeck/projects/project_name` in the Rundeck server. We will be using the yaml resource format in this case.
 
 Create a file called resource.yml on your local machine. We will dump our mapping of Zabbix hosts to the file and eventually copy it over to Rundeck.
 
@@ -141,7 +141,7 @@ You can read more about node entries [here](http://rundeck.org/docs/man5/resourc
 
 Next steps would be to loop through the `host_details` value gotten from Zabbix API, fill the node object with the appropriate values and dump the node object to the `resources.yml` file using `yaml.dump()`. With this, we have been able to successfully map our Zabbix hosts to Rundeck nodes :)
 
-Do not forget to add Rundeck's local host to resources.yml file. copy the file over to `/etc/rundeck/projects/project_name/resources.yml` on Rundeck's server.
+Do not forget to add Rundeck's local host to resources.yml file. copy the file over to `/etc/rundeck/projects/project_name/resources.yml` or `/var/rundeck/projects/project_name/resources.yml` on Rundeck's server.
 
 ## Map Zabbix trigger names to Rundeck job names
 Create a file called jobs.yml on your local machine. We will dump our mapping of Zabbix triggers to the file and eventually load it to Rundeck.
