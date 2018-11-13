@@ -111,3 +111,4 @@ compress_html:
         envs:
         - development
         - stage
+exclude: ["travis.sh", "Rakefile", "README.md", "Gemfile", "Gemfile.lock"]
