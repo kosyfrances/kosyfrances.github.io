@@ -1,7 +1,7 @@
 ---
-title: "Using kubeadm to create a Kubernetes 1.10 cluster on VirtualBox with Ubuntu"
+title: "Using kubeadm to create a Kubernetes 1.13 cluster on VirtualBox with Ubuntu"
 layout: post
-date: 2018-05-04 20:36
+date: 2019-01-22 20:36
 headerImage: false
 tag:
 - kubernetes
@@ -11,7 +11,7 @@ tag:
 - virtualbox
 category: blog
 author: kosyanyanwu
-description: Create a Kubernetes 1.10 cluster using kubeadm on VirtualBox virtual machines running Ubuntu 18.04 LTS.
+description: Create a Kubernetes 1.13.2 cluster using kubeadm on VirtualBox virtual machines running Ubuntu 18.04 LTS.
 ---
 
 ## Introduction
@@ -34,12 +34,28 @@ The hostnames and IP addresses of the machines are as follows:
 
 
 ## Install Docker
-Install Docker on each running VM from Ubuntu’s repositories:
+The following steps should be done on all of the running VMs.
+
+Install Docker v18.06 from Ubuntu’s repositories:
 ```
 apt update
-apt install -y docker.io
+apt install -y docker.io=18.06.1-0ubuntu1~18.04.1
 ```
-Refer to the [official Docker installation](https://docs.docker.com/install/) guides for more information.
+Create the `docker` group and add the `Vagrant` user:
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
+Log out and log back in so that your group membership is re-evaluated.
+
+Configure docker to start on boot.
+```
+sudo systemctl enable docker
+```
+
+Refer to the [official Docker installation](https://docs.docker.com/install/linux/linux-postinstall/) guides for more information.
 
 ## Install kubeadm, kubelet and kubectl
 Install these packages on all of the running VMs:
@@ -57,36 +73,19 @@ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 apt update
-apt install -y kubelet=1.10.3-00 kubeadm=1.10.3-00 kubectl=1.10.3-00
+apt install -y kubelet=1.13.2-00 kubeadm=1.13.2-00 kubectl=1.13.2-00
 ```
 
-## Configure cgroup driver used by kubelet on Master Node
-On kubemaster, make sure that the cgroup driver used by kubelet is the same as the one used by Docker. Verify that your Docker cgroup driver matches the kubelet config:
-```
-docker info | grep -i cgroup
-cat /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-```
-If the Docker cgroup driver and the kubelet config don’t match, change the kubelet config to match the Docker cgroup driver. The flag you need to change is --cgroup-driver. If it’s already set, you can update like so:
-```
-sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-```
-Otherwise, just add an additional environment to `/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`
-
-```
-Environment="KUBELET_CGROUP_DRIVER=--cgroup-driver=cgroupfs"
-```
-And append `$KUBELET_CGROUP_DRIVER` to `ExecStart=`
-
-Then restart kubelet:
+## Initialise Master node
+On kubemaster, start kubelet:
 ```
 systemctl daemon-reload
 systemctl restart kubelet
 ```
 
-## Initialise Master node
 This is where you decide what Container Network Interface (CNI) plugin to use as some of them require you to specify parameters when initialising the master node. In this article we will be using [Calico](https://docs.projectcalico.org/v3.1/getting-started/kubernetes/) and in order for Network Policy to work correctly with it, you need to pass `--pod-network-cidr=192.168.0.0/16` to `kubeadm init`. We also need to specify the advertise address of the API server because we have multiple network adapters on the host and we need it to advertise on the host-only network IP.
 
-On kubemaster, run
+Now run
 ```
 sudo kubeadm init --apiserver-advertise-address=192.168.99.20 --pod-network-cidr=192.168.0.0/16
 ```
@@ -114,16 +113,19 @@ kubectl get pods --all-namespaces
 You should get something like this:
 ```
 vagrant@kubemaster:~$ kubectl get pods --all-namespaces
-NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
-kube-system   calico-etcd-9psmg                          1/1       Running   0          11m
-kube-system   calico-kube-controllers-685755779f-zx5dt   1/1       Running   0          11m
-kube-system   calico-node-g8bcf                          2/2       Running   0          11m
-kube-system   etcd-kubemaster                            1/1       Running   0          9m
-kube-system   kube-apiserver-kubemaster                  1/1       Running   1          9m
-kube-system   kube-controller-manager-kubemaster         1/1       Running   0          9m
-kube-system   kube-dns-86f4d74b45-xhc82                  3/3       Running   0          17m
-kube-system   kube-proxy-9jg8q                           1/1       Running   0          17m
-kube-system   kube-scheduler-kubemaster                  1/1       Running   0          9m
+NAMESPACE     NAME                                 READY   STATUS    RESTARTS   AGE
+kube-system   calico-node-6fkt5                    2/2     Running   0          67s
+kube-system   calico-node-n972r                    2/2     Running   0          61s
+kube-system   calico-node-v965s                    2/2     Running   0          61s
+kube-system   coredns-86c58d9df4-9lb8f             1/1     Running   0          67s
+kube-system   coredns-86c58d9df4-ht6f8             1/1     Running   0          67s
+kube-system   etcd-kubemaster                      1/1     Running   0          14s
+kube-system   kube-apiserver-kubemaster            1/1     Running   0          9s
+kube-system   kube-controller-manager-kubemaster   1/1     Running   0          31s
+kube-system   kube-proxy-vv78z                     1/1     Running   0          61s
+kube-system   kube-proxy-x2mn9                     1/1     Running   0          61s
+kube-system   kube-proxy-ztq8q                     1/1     Running   0          67s
+kube-system   kube-scheduler-kubemaster            1/1     Running   0          21s
 ```
 
 If your network is not working or kube-dns is not in the Running state, check out [kubeadm troubleshooting docs](https://kubernetes.io/docs/setup/independent/troubleshooting-kubeadm/).
@@ -138,10 +140,10 @@ You can run `watch kubectl get nodes` on the kubemaster to see the worker machin
 
 Eventually you should see something like this:
 ```
-NAME         STATUS    ROLES     AGE       VERSION
-kubemaster   Ready     master    34m       v1.10.2
-worker1      Ready     <none>    10m       v1.10.2
-worker2      Ready     <none>    10m       v1.10.2
+NAME         STATUS     ROLES    AGE   VERSION
+kubemaster   Ready      master   54s   v1.13.2
+worker1      Ready      <none>   27s   v1.13.2
+worker2      Ready      <none>   27s   v1.13.2
 ```
 
 ## Tear down
@@ -159,4 +161,3 @@ sudo kubeadm reset
 If you wish to start over simply run `kubeadm init` or `kubeadm join` with the appropriate arguments.
 
 More options and information about the [kubeadm reset](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-reset/) command.
-
