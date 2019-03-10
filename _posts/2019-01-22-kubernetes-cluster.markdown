@@ -39,7 +39,7 @@ The following steps should be done on all of the running VMs.
 Install Docker v18.06 from Ubuntu’s repositories:
 ```
 apt update
-apt install -y docker.io=18.06.1-0ubuntu1~18.04.1
+apt install -y docker.io=18.06.1-0ubuntu1.2~18.04.1
 ```
 Create the `docker` group and add the `Vagrant` user:
 
