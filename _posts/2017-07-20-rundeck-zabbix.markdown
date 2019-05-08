@@ -21,6 +21,8 @@ description: Integrate Zabbix trigger-based actions into Rundeck
 
 This article explains how you can integrate Zabbix trigger-based actions into Rundeck. The code snippets and examples are written in Python3, using Zabbix API version 3.2 and Rundeck API version 20.
 
+Update: If you just want a quick setup without wanting to know how it is done, you can skip the rest of this article and use the [rundeck-zabbix](https://github.com/kosyfrances/rundeck-zabbix) CLI tool.
+
 ## Real world example
 * A service stops running
 * Zabbix fires trigger and sends notifications
