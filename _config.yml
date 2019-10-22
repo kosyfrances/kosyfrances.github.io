@@ -14,11 +14,7 @@ picture: assets/images/profile.jpg
 # and specify source (external or local).
 # resume: true
 # resume-external: true
-<<<<<<< HEAD
 # resume-url: https://drive.google.com/file/d/0B3Adg2pI1c4nVHM1VFQyMm8zeUk/view?usp=sharing
-=======
-# resume-url: https://google.com/?q=my+resume
->>>>>>> Edit config, update gitignore
 
 url: https://kosyfrances.github.io
 # your url: http://USERNAME.github.io
@@ -38,7 +34,7 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-facebook: kosy.f.anyanwu
+# facebook: myfacebook
 twitter: kosyfrances
 # google: mygoogle
 # instagram: myinstagram
