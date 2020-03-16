@@ -4,17 +4,17 @@ layout: page
 ---
 ![Profile Image]({{ site.url }}/{{ site.picture }})
 
-<p>Hi, I'm Kosy and I am a Software Engineer. Curious by nature and always wanting to know "why?", I spend much of my time exploring and tinkering with stuff in order to learn something new and make things better. I've done a lot of different stuff ranging from web development to DevOps to building infrastructure tools. In all, I enjoy building things.</p>
+<p>Hi, I'm Kosy and I am a Backend Engineer at <a href="https://www.deliveryhero.com/">Delivery Hero</a>. Curious by nature and always wanting to know "why?", I spend much of my time exploring and tinkering with stuff in order to learn something new and make things better. I've done a lot of different stuff ranging from web development to DevOps to building infrastructure tools. In all, I enjoy building things.</p>
 
-<p>In my free time, I love to do karaoke and travel :)</p>
+<p>In my free time, I like to do karaoke and travel. I also like memes ... a lot :)</p>
 
 <h2>Skills</h2>
 
 <ul class="skill-list">
-	<li>Python/Django</li>
 	<li>Go</li>
-	<li>Ansible</li>
+	<li>Python/Django</li>
 	<li>Terraform</li>
+	<li>Ansible</li>
 	<li>Kubernetes</li>
 	<li>Docker</li>
 	<li>TDD/BDD</li>
