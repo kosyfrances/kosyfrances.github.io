@@ -18,7 +18,7 @@ description: Setting up GKE Ingress with Let’s Encrypt certificate using Cert-
 
 This article describes how to setup Ingress for External HTTP(S) Load Balancing, install cert-manager certificate provisioner and setup up a Let's Encrypt certificate. This was written based on GKE [v1.14.10-gke.17](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable#february_11_2020), [cert-manager](https://cert-manager.io/) v0.13 and [Helm](https://helm.sh/) v3.
 
-### Prerequisites
+## Prerequisites
 * [A GKE Kubernetes cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster)
 * [Helm](https://helm.sh/docs/intro/install/)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
@@ -26,7 +26,7 @@ This article describes how to setup Ingress for External HTTP(S) Load Balancing,
 
 Note that a Service exposed through an Ingress must respond to health checks from the load balancer. According to the [docs](https://cloud.google.com/kubernetes-engine/docs/concepts/ingress#health_checks), your app must either serve a response with an HTTP 200 status to GET requests on the / path, or you can configure an HTTP readiness probe, serving a response with an HTTP 200 status to GET requests on the path specified by the readiness probe.
 
-### Create a deployment
+## Create a deployment
 Here is an example of a sample deployment manifest.
 ```yaml
 apiVersion: apps/v1
@@ -85,7 +85,8 @@ cert-manager runs within your Kubernetes cluster as a series of deployment resou
 
 * Install the CustomResourceDefinition resources separately.
     ```sh
-    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/v0.13.1/deploy/manifests/00-crds.yaml
+    kubectl apply --validate=false \
+    -f https://raw.githubusercontent.com/jetstack/cert-manager/v0.13.1/deploy/manifests/00-crds.yaml
     ```
 
 * Create the namespace for cert-manager.
@@ -224,28 +225,7 @@ Check on the status of the clusterissuer after you create it:
 $ kubectl describe clusterissuer letsencrypt-staging
 
 Name:         letsencrypt-staging
-Namespace:
-Labels:       <none>
-Annotations:  kubectl.kubernetes.io/last-applied-configuration:
-                {"apiVersion":"cert-manager.io/v1alpha2","kind":"ClusterIssuer","metadata":{"annotations":{},"name":"letsencrypt-staging"},"spec":{"acme":...
-API Version:  cert-manager.io/v1alpha2
-Kind:         ClusterIssuer
-Metadata:
-  Creation Timestamp:  2020-02-24T18:33:55Z
-  Generation:          1
-  Resource Version:    1751518
-  Self Link:           /apis/cert-manager.io/v1alpha2/clusterissuers/letsencrypt-staging
-  UID:                 3699c43a-5734-11ea-8167-42010a840033
-Spec:
-  Acme:
-    Email:  you@youremail.com
-    Private Key Secret Ref:
-      Name:  letsencrypt-staging
-    Server:  https://acme-staging-v02.api.letsencrypt.org/directory
-    Solvers:
-      http01:
-        Ingress:
-          Class:  ingress-gce
+...
 Status:
   Acme:
     Last Registered Email:  you@youremail.com
@@ -312,33 +292,7 @@ Describe certificate.
 ```sh
 $ kubectl describe certificate sampleApp-cert-secret
 Name:         sampleApp-cert-secret
-Namespace:    default
-Labels:        <none>
-Annotations:  acme.cert-manager.io/http01-override-ingress-name: sampleApp-ingress
-              cert-manager.io/issue-temporary-certificate: true
-API Version:  cert-manager.io/v1alpha2
-Kind:         Certificate
-Metadata:
-  Creation Timestamp:  2020-03-02T16:30:01Z
-  Generation:          1
-  Owner References:
-    API Version:           extensions/v1beta1
-    Block Owner Deletion:  true
-    Controller:            true
-    Kind:                  Ingress
-    Name:                  sampleApp-ingress
-    UID:                   20911256-5231-11ea-8167-42010a80921
-  Resource Version:        4941888
-  Self Link:               /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/sampleApp-cert-secret
-  UID:                     2093fe67-5231-11ea-8167-42010a80921
-Spec:
-  Dns Names:
-    example.example.com
-  Issuer Ref:
-    Group:      cert-manager.io
-    Kind:       ClusterIssuer
-    Name:       letsencrypt-staging
-  Secret Name:  sampleApp-cert-secret
+...
 Status:
   Conditions:
     Last Transition Time:  2020-03-02T16:30:01Z
@@ -355,16 +309,7 @@ Describe secrets created by cert manager.
 $ kubectl describe secret sampleApp-cert-secret
 
 Name:         sampleApp-cert-secret
-Namespace:    default
-Labels:       <none>
-Annotations:  cert-manager.io/alt-names: example.example.com
-              cert-manager.io/certificate-name: sampleApp-cert-secret
-              cert-manager.io/common-name: example.example.com
-              cert-manager.io/ip-sans:
-              cert-manager.io/issuer-kind: ClusterIssuer
-              cert-manager.io/issuer-name: letsencrypt-staging
-              cert-manager.io/uri-sans:
-
+...
 Type:  kubernetes.io/tls
 
 Data
