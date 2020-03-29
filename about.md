@@ -16,7 +16,6 @@ layout: page
 	<li>Terraform</li>
 	<li>Ansible</li>
 	<li>Kubernetes</li>
-	<li>Docker</li>
 	<li>TDD/BDD</li>
 	<li>Automation</li>
 	<li>CI/CD</li>
