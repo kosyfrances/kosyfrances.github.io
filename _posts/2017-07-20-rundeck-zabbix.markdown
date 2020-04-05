@@ -2,7 +2,7 @@
 title: "Runbook Automation with Zabbix and Rundeck"
 layout: post
 date: 2017-07-20 10:29
-image: /assets/images/zabbix-rundeck.jpg
+image: /assets/images/rundeck-zabbix.png
 headerImage: false
 tag:
 - rundeck
