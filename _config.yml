@@ -113,18 +113,12 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-admin
-<<<<<<< HEAD
   - jekyll-paginate-v2
-=======
-  - jekyll-paginate
-  - jekyll-admin
->>>>>>> [feature] adding jekyll admin
 
 jekyll-mentions:
   base_url: https://github.com
 
 compress_html:
-<<<<<<< HEAD
   ignore:
     envs:
       - development
@@ -140,10 +134,3 @@ exclude:
     "node_modules",
     "vendor",
   ]
-=======
-    ignore:
-        envs:
-        - development
-        - stage
-exclude: ["travis.sh", "Rakefile", "README.md", "Gemfile", "Gemfile.lock", "FAQ.md"]
->>>>>>> fix: exclude FAQ
