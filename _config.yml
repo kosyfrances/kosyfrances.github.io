@@ -14,7 +14,7 @@ picture: assets/images/profile.jpg
 # and specify source (external or local).
 # resume: true
 # resume-external: true
-# resume-url: https://drive.google.com/file/d/0B3Adg2pI1c4nVHM1VFQyMm8zeUk/view?usp=sharing
+# resume-url: https://github.com
 
 url: https://kosyfrances.github.io
 # your url: http://USERNAME.github.io
@@ -31,7 +31,7 @@ permalink: /:title/
 # if you don't want comments in your posts, leave categories empty
 disqus:
   shortname: kosyfrances # enter this from your disqus account
-  categories: [blog, project] # only show disqus for posts that have these categories
+  categories: [blog, project, memoirs] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
 # facebook: myfacebook
@@ -78,6 +78,7 @@ pagination:
 # if you don't need "about" or "blog", comment them out below
 about: true
 blog: true
+memoirs: true
 
 # do you want to show the "read time" of the posts?
 read-time: true
@@ -89,7 +90,7 @@ show-tags: true
 related: true
 
 # Display links for next and previous posts for the specified categories
-post-advance-links: [blog]
+post-advance-links: [blog, memoirs]
 
 # show author block at the end of a post ?
 show-author: true

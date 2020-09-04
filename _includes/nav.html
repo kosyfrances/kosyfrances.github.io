@@ -14,6 +14,15 @@
             {% endif %}
         {% endif %}
 
+        {% if site.memoirs == true %}
+            {% if page.title != "Memoirs" %}
+                <li class="item">
+                    <a class="link" href="{{ site.url }}/memoirs">Memoirs</a>
+                </li>
+            {% endif %}
+        {% endif %}
+
+
         {% if site.projects == true %}
             {% if page.title != "Projects" %}
                 <li class="item">
