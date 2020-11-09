@@ -10,6 +10,8 @@ author: kosyanyanwu
 description: Building software for the trash
 ---
 
+_Originally published on [Medium](https://medium.com/@kosyfrances/building-software-for-the-trash-2b4c596f9ac2)_.
+
 If you are a software developer, then you have probably found yourself in this situation, where you build a piece of software that never gets used. The patterns are similar — It could begin with a new idea or your project manager discussing the possibility of a new idea/task, the thought of how it would look when complete, engulfs you as your creative juices begin to flow. You take your time breaking the goal down into little tasks that you arrange in a beautiful project management tool with associated tags. You are a consummate professional after all. You take your time building, writing tests along the way because, TDD, duh! A couple of weeks go by, months even, and when you are done, your tiny piece of software lives. It lives 🎊 🎊 🎊. But then the software never gets a look, forget about it being used.
 
 Yea that happened to me so much I coined a term for it, the title of this article. The rest of this piece details my past experience with this phenomenon and what I learnt in the process of building software for the trash.
