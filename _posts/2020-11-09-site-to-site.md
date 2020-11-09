@@ -232,7 +232,7 @@ As at when I tried this, Packet creates machines in separate subnets by default,
 
 [Packet](https://www.packet.com/)'s L3-only networking creates some challenges with routing packets from our private strongswan cluster to AWS. In this case, hosts are not in the same subnet. Instead, the host only sees a /31 network with an invisible datacenter-internal routing peer. In order to route packets to and from the VPN, we need to set up a tunnel between [Packet](https://www.packet.com/) nodes and the VPN server. Those tunnels work peer-to-peer; i.e. while we need only one tunnel endpoint per node, the VPN server needs to have tunnel endpoints for all [Packet](https://www.packet.com/) nodes.
 
-Please find an example configuration (server and one node) below. Please note that the interface names "node-1" (for Strongswan test host) and "vpn-server" are arbitrary. We will use 192.168.0.0/30 for the internal tunnel transfer network, and we will assume that the VPN server private IP is 10.80.166.1, and the node's IP is 10.80.166.3.
+You can find an example configuration (server and one node) below. Note that the interface names `node-1` (for Strongswan test host) and `vpn-server` are arbitrary. We will use 192.168.0.0/30 for the internal tunnel transfer network, and we will assume that the VPN server private IP is 10.80.166.1, and the node's IP is 10.80.166.3.
 ```sh
 # VPN Server
 
