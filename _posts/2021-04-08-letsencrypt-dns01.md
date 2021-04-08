@@ -16,6 +16,8 @@ description: Configuring DNS01 Challenge Provider using Google CloudDNS for Let'
 ## Introduction
 This article explains how to set up a ClusterIssuer to use Google CloudDNS to solve [DNS01 ACME challenge](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge). It assumes that your cluster is hosted on Google Cloud Platform (GCP) and that you already have a [domain set up with CloudDNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip#step_4_configure_your_domain_name_records). It also assumes that you have [cert-manager installed](/ingress-gce-letsencrypt/#install-cert-manager) on your cluster.
 
+This was written based on GKE [v1.17.17-gke.3000](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable#february_11_2020) and [cert-manager](https://cert-manager.io/) v1.20.
+
 ## Create a Service Account
 Create a [service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) with `dns.admin` role. This is required for cert-manager to be able to add records to CloudDNS in order to solve the DNS01 challenge.
 
@@ -43,7 +45,7 @@ metadata:
 spec:
   acme:
     email: you@youremail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:
@@ -63,7 +65,7 @@ If your GKE cluster already has [workload identity](https://cloud.google.com/kub
 
   If you followed the [standard methods for deploying cert-manger to Kubernetes](https://cert-manager.io/docs/installation/kubernetes/), run the following command:
   ```sh
-  $ gcloud iam service-accounts add-iam-policy-binding \
+  gcloud iam service-accounts add-iam-policy-binding \
     --role roles/iam.workloadIdentityUser \
     --member "serviceAccount:$PROJECT_ID.svc.id.goog[cert-manager/cert-manager]" \
     dns01-solver@$PROJECT_ID.iam.gserviceaccount.com
@@ -75,7 +77,7 @@ If your GKE cluster already has [workload identity](https://cloud.google.com/kub
   
   To do this, add the proper workload identity annotation to the cert-manager service account.
   ```sh
-  $ kubectl annotate serviceaccount --namespace=cert-manager cert-manager \
+  kubectl annotate serviceaccount --namespace=cert-manager cert-manager \
     "iam.gke.io/gcp-service-account=dns01-solver@$PROJECT_ID.iam.gserviceaccount.com"
   ```
 
@@ -91,7 +93,7 @@ metadata:
 spec:
   acme:
     email: you@youremail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:

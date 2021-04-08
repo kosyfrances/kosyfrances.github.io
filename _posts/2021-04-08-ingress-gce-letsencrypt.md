@@ -1,7 +1,7 @@
 ---
 title: "GKE Ingress with Let’s Encrypt using Cert-Manager"
 layout: post
-date: 2020-03-16 12:05
+date: 2021-04-08 12:05
 headerImage: false
 tag:
 - kubernetes
@@ -16,7 +16,7 @@ description: Setting up GKE Ingress with Let’s Encrypt certificate using Cert-
 ## Introduction
 [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) provides a built-in and managed Ingress controller called GKE Ingress. When you create an Ingress object, the GKE Ingress controller creates a Google Cloud HTTP(S) load balancer and configures it according to the information in the Ingress and its associated Services.
 
-This article describes how to setup Ingress for External HTTP(S) Load Balancing, install cert-manager certificate provisioner and setup up a Let's Encrypt certificate. This was written based on GKE [v1.14.10-gke.17](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable#february_11_2020), [cert-manager](https://cert-manager.io/) v0.13 and [Helm](https://helm.sh/) v3.
+This article describes how to setup Ingress for External HTTP(S) Load Balancing, install cert-manager certificate provisioner and setup up a Let's Encrypt certificate. This was written based on GKE [v1.17.17-gke.3000](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable#february_11_2020), [cert-manager](https://cert-manager.io/) v1.20 and [Helm](https://helm.sh/) v3.
 
 ## Prerequisites
 * [A GKE Kubernetes cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster)
@@ -85,13 +85,7 @@ cert-manager runs within your Kubernetes cluster as a series of deployment resou
 
 * Install the CustomResourceDefinition resources separately.
     ```sh
-    kubectl apply --validate=false \
-    -f https://raw.githubusercontent.com/jetstack/cert-manager/v0.13.1/deploy/manifests/00-crds.yaml
-    ```
-
-* Create the namespace for cert-manager.
-    ```sh
-    kubectl create namespace cert-manager
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.crds.yaml
     ```
 
 * Add the Jetstack Helm repository.
@@ -109,7 +103,8 @@ cert-manager runs within your Kubernetes cluster as a series of deployment resou
     helm install \
       cert-manager jetstack/cert-manager \
       --namespace cert-manager \
-      --version v0.13.1
+      --create-namespace \
+      --version v1.2.0
     ```
 
 * Verify the installation.
@@ -130,7 +125,7 @@ cert-manager runs within your Kubernetes cluster as a series of deployment resou
     metadata:
       name: cert-manager-test
     ---
-    apiVersion: cert-manager.io/v1alpha2
+    apiVersion: cert-manager.io/v1
     kind: Issuer
     metadata:
       name: test-selfsigned
@@ -138,7 +133,7 @@ cert-manager runs within your Kubernetes cluster as a series of deployment resou
     spec:
       selfSigned: {}
     ---
-    apiVersion: cert-manager.io/v1alpha2
+    apiVersion: cert-manager.io/v1
     kind: Certificate
     metadata:
       name: selfsigned-cert
@@ -194,7 +189,7 @@ The Let’s Encrypt production issuer has very strict [rate limits](https://lets
 Create a clusterissuer definition and update the email address to your own. This email is required by Let’s Encrypt and used to notify you of certificate expiration and updates.
 ```yaml
 cat <<EOF > clusterissuer.yaml
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
@@ -245,7 +240,7 @@ You should see the issuer listed with a registered account.
 Create an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) definition.
 ```yaml
 cat <<EOF > ingress.yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: sampleApp-ingress
@@ -320,9 +315,38 @@ tls.key:  1675 bytes
 ```
 
 ## Switch to Let's Encrypt Prod
+Update the clusterissuer to use Let's encrypt prod.
+```yaml
+cat <<EOF > clusterissuer.yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: you@youremail.com # Update to yours
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+            class: ingress-gce
+EOF
+```
+
+Once edited, apply the custom resource:
+```sh
+kubectl apply -f clusterissuer.yaml
+```
+
 Now that we are sure that everything is configured correctly, you can update the annotations in the ingress to specify the production issuer:
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: sampleApp-ingress
@@ -347,14 +371,12 @@ spec:
           servicePort: 8080
 ```
 ```sh
-$ kubectl create --edit -f ingress.yaml
-ingress.extensions "sampleApp-ingress" configured
+kubectl create --edit -f ingress.yaml
 ```
 
 You will also need to delete the existing secret, which cert-manager is watching. This will cause it to reprocess the request with the updated issuer.
 ```sh
-$ kubectl delete secret sampleApp-cert-secret
-secret "sampleApp-cert-secret" deleted
+kubectl delete secret sampleApp-cert-secret
 ```
 
 This will start the process to get a new certificate. Use `describe` to see the status.
