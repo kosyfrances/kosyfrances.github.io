@@ -1,7 +1,7 @@
 ---
 title: "DNS01 Challenge Provider for Let’s Encrypt Issuer using Google CloudDNS"
 layout: post
-date: 2020-03-22 12:05
+date: 2021-04-08 12:05
 headerImage: false
 tag:
 - kubernetes
@@ -16,10 +16,15 @@ description: Configuring DNS01 Challenge Provider using Google CloudDNS for Let'
 ## Introduction
 This article explains how to set up a ClusterIssuer to use Google CloudDNS to solve [DNS01 ACME challenge](https://letsencrypt.org/docs/challenge-types/#dns-01-challenge). It assumes that your cluster is hosted on Google Cloud Platform (GCP) and that you already have a [domain set up with CloudDNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip#step_4_configure_your_domain_name_records). It also assumes that you have [cert-manager installed](/ingress-gce-letsencrypt/#install-cert-manager) on your cluster.
 
+This was written based on GKE [v1.17.17-gke.3000](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable#february_11_2020) and [cert-manager](https://cert-manager.io/) v1.20.
+
 ## Create a Service Account
 Create a [service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) with `dns.admin` role. This is required for cert-manager to be able to add records to CloudDNS in order to solve the DNS01 challenge.
 
-## Create a Secret using the Service Account
+## Use Service Account
+To use this service account, you can either [create a service account secret](#create-a-service-account-secret), or use [GKE workload identity](#gke-workload-identity).
+
+### Create a Service Account secret
 To access the service account you created in the previous step, cert-manager uses a key stored in a Kubernetes Secret. First, create a key for the service account and download it as a JSON file, then [create a Secret](https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret-using-kubectl) from this file.
 
 ```sh
@@ -30,17 +35,17 @@ $ kubectl create secret generic clouddns-dns01-solver-svc-acct \
   --from-file=service-account.json
 ```
 
-## Create ClusterIssuer
+## Create ClusterIssuer (using Service Account secret setup)
 Here is a sample manifest
 ```yaml
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
 spec:
   acme:
     email: you@youremail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:
@@ -53,6 +58,53 @@ spec:
             name: clouddns-dns01-solver-svc-acct
             key: service-account.json
 ```
+
+### GKE Workload Identity
+If your GKE cluster already has [workload identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) enabled, you can leverage workload identity to avoid creating and managing static service account credentials. Follow these steps to do this:
+* Link Kubernetes Service Account to Google Service Account in GCP:
+
+  If you followed the [standard methods for deploying cert-manger to Kubernetes](https://cert-manager.io/docs/installation/kubernetes/), run the following command:
+  ```sh
+  gcloud iam service-accounts add-iam-policy-binding \
+    --role roles/iam.workloadIdentityUser \
+    --member "serviceAccount:$PROJECT_ID.svc.id.goog[cert-manager/cert-manager]" \
+    dns01-solver@$PROJECT_ID.iam.gserviceaccount.com
+  ```
+
+  If your cert-manager pods are running under a different service account, replace goog[cert-manager/cert-manager] with goog[NAMESPACE/SERVICE_ACCOUNT], where NAMESPACE is the namespace of the service account and SERVICE_ACCOUNT is the name of the service account.
+
+* Link Kubernetes Service Account to Google Service Account in Kubernetes:
+  
+  To do this, add the proper workload identity annotation to the cert-manager service account.
+  ```sh
+  kubectl annotate serviceaccount --namespace=cert-manager cert-manager \
+    "iam.gke.io/gcp-service-account=dns01-solver@$PROJECT_ID.iam.gserviceaccount.com"
+  ```
+
+  If your cert-manager pods are running under a different service account, replace --namespace=cert-manager cert-manager with --namespace=NAMESPACE SERVICE_ACCOUNT, where NAMESPACE is the namespace of the service account and SERVICE_ACCOUNT is the name of the service account.
+
+## Create ClusterIssuer (using Workload Identity setup)
+Here is a sample manifest
+```yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: you@youremail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+    - dns01:
+        clouddns:
+          # The ID of the GCP project
+          project: $PROJECT_ID
+```
+Note that the issuer does not include a serviceAccountSecretRef property. Excluding this instructs cert-manager to use the default credentials provided by GKE workload identity.
+
+## Verify
 
 View the clusterissuer object:
 
@@ -81,7 +133,7 @@ Events:                    <none>
 After successful creation of the ClusterIssuer, you can create a test Certificate to verify that everything works.
 Here is a sample manifest:
 ```yaml
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: example-com
