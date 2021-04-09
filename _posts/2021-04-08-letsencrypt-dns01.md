@@ -50,7 +50,7 @@ spec:
       name: letsencrypt-prod-account-key
     solvers:
     - dns01:
-        clouddns:
+        cloudDNS:
           # The ID of the GCP project
           project: $PROJECT_ID
           # Secret key reference to the service account created above
@@ -98,7 +98,7 @@ spec:
       name: letsencrypt-prod-account-key
     solvers:
     - dns01:
-        clouddns:
+        cloudDNS:
           # The ID of the GCP project
           project: $PROJECT_ID
 ```
