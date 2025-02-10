@@ -11,7 +11,7 @@ category: memoirs
 author: kosyanyanwu
 description: What should a software engineer look like?
 ---
-_Originally published on [Medium](https://code.likeagirl.io/what-should-a-software-engineer-look-like-a54ee1d3563b).
+_Originally published on [Medium](https://code.likeagirl.io/what-should-a-software-engineer-look-like-a54ee1d3563b)._
 
 Travelling to Nairobi, Kenya with a female colleague, we headed to Murtala Muhammed International Airport, Lagos to check in early as we could not contain our excitement of visiting a part of East Africa for the first time.
 
