@@ -1,5 +1,5 @@
 # main text of home
-name: Kosy Anyanwu
+title: Kosy Anyanwu
 bio: The lady who travels the world and loves karaoke
 
 # twitter summary info
@@ -52,12 +52,12 @@ medium: kosyfrances
 # email: email@gmail.com
 
 authors:
-    kosyanyanwu:
-        name: Kosy Anyanwu
-        bio: The lady who travels the world and loves karaoke
-        external-image: false
-        picture: assets/images/profile.jpg
-        twitter: kosyfrances
+  kosyanyanwu:
+    name: Kosy Anyanwu
+    bio: The lady who travels the world and loves karaoke
+    external-image: false
+    picture: assets/images/profile.jpg
+    twitter: kosyfrances
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
